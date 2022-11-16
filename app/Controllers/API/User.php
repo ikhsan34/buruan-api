@@ -3,6 +3,7 @@
 namespace App\Controllers\API;
 
 use App\Models\UserModel;
+use App\Models\ReminderModel;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -19,6 +20,9 @@ class User extends BaseController
      * @return Response
      * @throws ReflectionException
      */
+
+    
+
     public function register()
     {
         $rules = [

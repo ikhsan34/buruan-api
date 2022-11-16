@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ClientModel;
+use App\Models\ReminderModel;
 // use App\Controllers\BaseController;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -137,5 +138,36 @@ class Client extends BaseController
                 ResponseInterface::HTTP_NOT_FOUND
             );
         }
+    }
+    public function insertReminder()
+    {
+        $rules = [
+            'group_id' => 'required',
+            'user_id' => 'required',
+            'name' => 'required',
+            'desc' => 'required',
+            'deadline' => 'required'
+        ];
+
+        $input = $this->getRequestInput($this->request);
+
+        if (!$this->validateRequest($input, $rules)) {
+            return $this->getResponse(
+                    $this->validator->getErrors(),
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+        }
+
+        $reminderName = $input['name'];
+        $model = new ReminderModel();
+        $model->save($input);
+        $reminder = $model->where('name', $reminderName)->first();
+
+        return $this->getResponse(
+            [
+                'message' => 'Reminder added successfully',
+                'reminder' => $reminder
+            ]
+        );
     }
 }

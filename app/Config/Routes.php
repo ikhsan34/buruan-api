@@ -42,6 +42,7 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 $routes->add('register', 'API/User::register');
 $routes->add('login', 'API/User::login');
 $routes->post('reGenToken', 'API/Token::reGenToken');
+$routes->post('reminder', 'Client::insertReminder', ['filter' => 'auth']);
 
 // $routes->resource('API/Client'); // Equivalent to the following:
 $routes->get('client', 'Client::index', ['filter' => 'auth']);
