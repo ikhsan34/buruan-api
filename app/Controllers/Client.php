@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\ClientModel;
+use App\Models\GroupMembershipModel;
 use App\Models\ReminderModel;
+use App\Models\GroupModel;
 // use App\Controllers\BaseController;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -142,7 +144,7 @@ class Client extends BaseController
     public function insertReminder()
     {
         $rules = [
-            'group_id' => 'required',
+            'group_id',
             'user_id' => 'required',
             'name' => 'required',
             'desc' => 'required',
@@ -169,5 +171,143 @@ class Client extends BaseController
                 'reminder' => $reminder
             ]
         );
+    }
+
+    public function showReminder()
+    {
+        try {
+            $model = new ReminderModel();
+            $reminder = $model->findAll();
+
+            return $this->getResponse(
+                [
+                    'message' => 'Reminder retrieved successfully',
+                    'reminder' => $reminder
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find reminder'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function updateReminder($id)
+    {
+        try {
+            $model = new ReminderModel();
+            $model->findClientById($id);
+
+            $input = $this->getRequestInput($this->request);
+
+            $model->update($id, $input);
+            $reminder = $model->findClientById($id);
+
+            return $this->getResponse(
+                [
+                    'message' => 'Reminder updated successfully',
+                    'reminder' => $reminder
+                ]
+            );
+        } catch (Exception $exception) {
+
+            return $this->getResponse(
+                [
+                    'message' => $exception->getMessage()
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function createGroup() {
+        $rules = [
+            'user_id' => 'required',
+            'name' => 'required',
+        ];
+
+        $input = $this->getRequestInput($this->request);
+
+        if (!$this->validateRequest($input, $rules)) {
+            return $this->getResponse(
+                    $this->validator->getErrors(),
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+        }
+
+        $groupName = $input['name'];
+        $model = new GroupModel();
+        $model->save($input);
+        $group = $model->where('name', $groupName)->first();
+        $groupId = $model->getInsertID();
+        
+
+        $data = [
+            'user_id' => $input['user_id'],
+            'group_id' => $groupId
+        ];
+
+        $group_membership = new GroupMembershipModel();
+        $group_membership->insert($data);
+
+        return $this->getResponse(
+            [
+                'message' => 'Group added successfully',
+                'group' => $group
+            ]
+        );
+    }
+    public function joinGroup() {
+        $rules = [
+            'group_id' => 'required',
+            'user_id' => 'required',
+        ];
+
+        $input = $this->getRequestInput($this->request);
+
+        if (!$this->validateRequest($input, $rules)) {
+            return $this->getResponse(
+                    $this->validator->getErrors(),
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+        }
+
+
+        $groupMembershipId = $input['group_id'];
+        $model = new GroupMembershipModel();
+        $model->insert($input);
+        $groupMembership = $model->where('group_id', $groupMembershipId)->first();
+
+        return $this->getResponse(
+            [
+                'message' => 'Group join successfully',
+                'groupMembership' => $groupMembership
+            ]
+        );
+    }
+    public function showGroup()
+    {
+        try {
+            $model = new GroupModel();
+            $group = $model->findAll();
+            
+
+            return $this->getResponse(
+                [
+                    'message' => 'group retrieved successfully',
+                    'group' => $group
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find group'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
     }
 }
