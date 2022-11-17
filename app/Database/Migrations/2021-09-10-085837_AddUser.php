@@ -19,6 +19,11 @@ class AddUser extends Migration
                 'constraint' => '100',
                 'null' => false
             ],
+            'phone' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => true
+            ],
             'email' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
@@ -29,7 +34,6 @@ class AddUser extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => false,
-                'unique' => true
             ],
             'updated_at' => [
                 'type' => 'datetime',
