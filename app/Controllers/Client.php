@@ -43,9 +43,9 @@ class Client extends BaseController
 
         if (!$this->validateRequest($input, $rules)) {
             return $this->getResponse(
-                    $this->validator->getErrors(),
-                    ResponseInterface::HTTP_BAD_REQUEST
-                );
+                $this->validator->getErrors(),
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
         }
 
         $clientEmail = $input['email'];
@@ -128,10 +128,10 @@ class Client extends BaseController
             $model->delete($client);
 
             return $this->getResponse(
-                    [
-                        'message' => 'Client deleted successfully',
-                    ]
-                );
+                [
+                    'message' => 'Client deleted successfully',
+                ]
+            );
         } catch (Exception $exception) {
             return $this->getResponse(
                 [
@@ -144,7 +144,6 @@ class Client extends BaseController
     public function insertReminder()
     {
         $rules = [
-            'group_id',
             'user_id' => 'required',
             'name' => 'required',
             'desc' => 'required',
@@ -155,9 +154,9 @@ class Client extends BaseController
 
         if (!$this->validateRequest($input, $rules)) {
             return $this->getResponse(
-                    $this->validator->getErrors(),
-                    ResponseInterface::HTTP_BAD_REQUEST
-                );
+                $this->validator->getErrors(),
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
         }
 
         $reminderName = $input['name'];
@@ -223,7 +222,8 @@ class Client extends BaseController
         }
     }
 
-    public function createGroup() {
+    public function createGroup()
+    {
         $rules = [
             'user_id' => 'required',
             'name' => 'required',
@@ -233,9 +233,9 @@ class Client extends BaseController
 
         if (!$this->validateRequest($input, $rules)) {
             return $this->getResponse(
-                    $this->validator->getErrors(),
-                    ResponseInterface::HTTP_BAD_REQUEST
-                );
+                $this->validator->getErrors(),
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
         }
 
         $groupName = $input['name'];
@@ -243,7 +243,7 @@ class Client extends BaseController
         $model->save($input);
         $group = $model->where('name', $groupName)->first();
         $groupId = $model->getInsertID();
-        
+
 
         $data = [
             'user_id' => $input['user_id'],
@@ -260,7 +260,8 @@ class Client extends BaseController
             ]
         );
     }
-    public function joinGroup() {
+    public function joinGroup()
+    {
         $rules = [
             'group_id' => 'required',
             'user_id' => 'required',
@@ -270,9 +271,9 @@ class Client extends BaseController
 
         if (!$this->validateRequest($input, $rules)) {
             return $this->getResponse(
-                    $this->validator->getErrors(),
-                    ResponseInterface::HTTP_BAD_REQUEST
-                );
+                $this->validator->getErrors(),
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
         }
 
 
@@ -293,7 +294,7 @@ class Client extends BaseController
         try {
             $model = new GroupModel();
             $group = $model->findAll();
-            
+
 
             return $this->getResponse(
                 [
