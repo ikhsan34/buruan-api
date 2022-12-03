@@ -25,4 +25,16 @@ class GroupMembershipModel extends Model
 
         return $Group;
     }
+
+    public function userLeaveGroup($groupId, $userId)
+    {
+        $Group = $this
+            ->asArray()
+            ->where(['group_id' => $groupId, 'user_id' => $userId])
+            ->delete();
+
+        if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
+
+        return $Group;
+    }
 }

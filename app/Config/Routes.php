@@ -49,12 +49,19 @@ $routes->post('client', 'Client::store', ['filter' => 'auth']);
 $routes->get('client/(:num)', 'Client::show/$1', ['filter' => 'auth']);
 $routes->put('client/(:num)', 'Client::update/$1', ['filter' => 'auth']);
 $routes->delete('client/(:num)', 'Client::destroy/$1', ['filter' => 'auth']);
+
+// Reminder
 $routes->post('reminder', 'Client::insertReminder', ['filter' => 'auth']);
-$routes->get('reminder', 'Client::showReminder', ['filter' => 'auth']);
+$routes->get('reminder', 'Client::showReminder');
+$routes->get('reminder/user/(:num)', 'Client::showReminderByUserId/$1', ['filter' => 'auth']);
+$routes->get('reminder/group/(:num)', 'Client::showReminderByGroupId/$1', ['filter' => 'auth']);
 $routes->put('reminder/(:num)', 'Client::updateReminder/$1', ['filter' => 'auth']);
+
+// Group
 $routes->post('group', 'Client::createGroup', ['filter' => 'auth']);
 $routes->get('group', 'Client::showGroup', ['filter' => 'auth']);
 $routes->post('group/join', 'Client::joinGroup', ['filter' => 'auth']);
+$routes->delete('group/(:num)/user/(:num)', 'Client::leaveGroup/$1/$2', ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

@@ -144,7 +144,6 @@ class Client extends BaseController
     public function insertReminder()
     {
         $rules = [
-            'user_id' => 'required',
             'name' => 'required',
             'desc' => 'required',
             'deadline' => 'required'
@@ -177,6 +176,50 @@ class Client extends BaseController
         try {
             $model = new ReminderModel();
             $reminder = $model->findAll();
+
+            return $this->getResponse(
+                [
+                    'message' => 'Reminder retrieved successfully',
+                    'reminder' => $reminder
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find reminder'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function showReminderByUserId($id)
+    {
+        try {
+            $model = new ReminderModel();
+            $reminder = $model->findReminderByUserId($id);
+
+            return $this->getResponse(
+                [
+                    'message' => 'Reminder retrieved successfully',
+                    'reminder' => $reminder
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find reminder'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function showReminderByGroupId($id)
+    {
+        try {
+            $model = new ReminderModel();
+            $reminder = $model->findReminderByGroupId($id);
 
             return $this->getResponse(
                 [
@@ -289,6 +332,30 @@ class Client extends BaseController
             ]
         );
     }
+
+    public function leaveGroup($groupId, $userId)
+    {
+        try {
+            $model = new GroupMembershipModel();
+            $group = $model->userLeaveGroup($groupId, $userId);
+
+
+            return $this->getResponse(
+                [
+                    'message' => 'leave group successfully',
+                    'group' => $group
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Error leaving'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
     public function showGroup()
     {
         try {

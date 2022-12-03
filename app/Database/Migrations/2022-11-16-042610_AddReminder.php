@@ -22,7 +22,7 @@ class AddReminder extends Migration
             'user_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'null' => false
+                'null' => true
             ],
             'name' => [
                 'type' => 'VARCHAR',
