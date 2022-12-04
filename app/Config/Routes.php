@@ -62,6 +62,8 @@ $routes->post('group', 'Client::createGroup', ['filter' => 'auth']);
 $routes->get('group', 'Client::showGroup', ['filter' => 'auth']);
 $routes->post('group/join', 'Client::joinGroup', ['filter' => 'auth']);
 $routes->delete('group/(:num)/user/(:num)', 'Client::leaveGroup/$1/$2', ['filter' => 'auth']);
+$routes->get('group/user/(:num)', 'Client::showGroupByUserId/$1', ['filter' => 'auth']);
+$routes->get('group/group/(:num)', 'Client::showGroupByGroupId/$1', ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------
