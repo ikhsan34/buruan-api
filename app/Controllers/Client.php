@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Database\Migrations\GroupMembership;
 use App\Models\ClientModel;
 use App\Models\GroupMembershipModel;
 use App\Models\ReminderModel;
@@ -361,6 +362,78 @@ class Client extends BaseController
         try {
             $model = new GroupModel();
             $group = $model->findAll();
+
+
+            return $this->getResponse(
+                [
+                    'message' => 'group retrieved successfully',
+                    'group' => $group
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find group'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function deleteGroup($groupId)
+    {
+        try {
+            $model = new GroupModel();
+            $group = $model->deleteGroup($groupId);
+
+            $model2 = new GroupMembershipModel();
+            $group2 = $model2->userDeleteGroup($groupId);
+
+
+            return $this->getResponse(
+                [
+                    'message' => 'group retrieved successfully',
+                    'group' => [$group, $group2]
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find group'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function showGroupByUserId($id)
+    {
+        try {
+            $model = new GroupMembershipModel();
+            $group = $model->findGroupByUserId($id);
+
+
+            return $this->getResponse(
+                [
+                    'message' => 'group retrieved successfully',
+                    'group' => $group
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find group'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function showGroupByGroupId($id)
+    {
+        try {
+            $model = new GroupMembershipModel();
+            $group = $model->findGroupByGroupId($id);
 
 
             return $this->getResponse(

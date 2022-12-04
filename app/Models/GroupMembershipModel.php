@@ -14,12 +14,24 @@ class GroupMembershipModel extends Model
     ];
     protected $updatedField = 'updated_at';
 
-    public function findGroupById($id)
+    public function findGroupByUserId($id)
     {
         $Group = $this
             ->asArray()
             ->where(['group_id' => $id])
-            ->first();
+            ->findAll();
+
+        if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
+
+        return $Group;
+    }
+
+    public function findGroupByGroupId($id)
+    {
+        $Group = $this
+            ->asArray()
+            ->where(['user_id' => $id])
+            ->findAll();
 
         if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
 
@@ -31,6 +43,18 @@ class GroupMembershipModel extends Model
         $Group = $this
             ->asArray()
             ->where(['group_id' => $groupId, 'user_id' => $userId])
+            ->delete();
+
+        if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
+
+        return $Group;
+    }
+
+    public function userDeleteGroup($groupId)
+    {
+        $Group = $this
+            ->asArray()
+            ->where(['group_id' => $groupId])
             ->delete();
 
         if (!$Group) throw new Exception('Could not find Group Membership for specified ID');

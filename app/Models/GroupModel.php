@@ -25,4 +25,16 @@ class GroupModel extends Model
         return $group;
     }
 
+    public function deleteGroup($groupId)
+    {
+        $group = $this
+            ->asArray()
+            ->where(['id' => $groupId])
+            ->delete();
+
+        if (!$group) throw new Exception('Could not find Group for specified ID');
+
+        return $group;
+    }
+
 }
