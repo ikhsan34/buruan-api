@@ -357,11 +357,11 @@ class Client extends BaseController
         }
     }
 
-    public function showGroup()
+    public function showGroup($groupId)
     {
         try {
             $model = new GroupModel();
-            $group = $model->findAll();
+            $group = $model->findGroupById($groupId);
 
 
             return $this->getResponse(

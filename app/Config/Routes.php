@@ -41,7 +41,7 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 // $routes->resource();
 $routes->add('register', 'API/User::register');
 $routes->add('login', 'API/User::login');
-$routes->post('reGenToken', 'API/Token::reGenToken');
+//$routes->post('reGenToken', 'API/Token::reGenToken');
 
 // $routes->resource('API/Client'); // Equivalent to the following:
 $routes->get('client', 'Client::index', ['filter' => 'auth']);
@@ -59,7 +59,7 @@ $routes->put('reminder/(:num)', 'Client::updateReminder/$1', ['filter' => 'auth'
 
 // Group
 $routes->post('group', 'Client::createGroup', ['filter' => 'auth']);
-$routes->get('group', 'Client::showGroup', ['filter' => 'auth']);
+$routes->get('group/(:num)', 'Client::showGroup/$1', ['filter' => 'auth']);
 $routes->post('group/join', 'Client::joinGroup', ['filter' => 'auth']);
 $routes->delete('group/(:num)/user/(:num)', 'Client::leaveGroup/$1/$2', ['filter' => 'auth']);
 $routes->get('group/user/(:num)', 'Client::showGroupByUserId/$1', ['filter' => 'auth']);
