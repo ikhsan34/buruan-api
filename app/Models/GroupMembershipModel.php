@@ -18,7 +18,7 @@ class GroupMembershipModel extends Model
     {
         $Group = $this
             ->asArray()
-            ->where(['group_id' => $id])
+            ->where(['user_id' => $id])
             ->findAll();
 
         if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
@@ -30,7 +30,7 @@ class GroupMembershipModel extends Model
     {
         $Group = $this
             ->asArray()
-            ->where(['user_id' => $id])
+            ->where(['group_id' => $id])
             ->findAll();
 
         if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
