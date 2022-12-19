@@ -18,6 +18,18 @@ class ReminderModel extends Model
     ];
     protected $updatedField = 'updated_at';
 
+    public function findReminderById($id)
+    {
+        $reminder = $this
+            ->asArray()
+            ->where(['id' => $id])
+            ->findAll();
+
+        if (!$reminder) throw new Exception('Could not find reminder for specified ID');
+
+        return $reminder;
+    }
+
     public function findReminderByUserId($id)
     {
         $reminder = $this
