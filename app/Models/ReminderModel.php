@@ -23,7 +23,7 @@ class ReminderModel extends Model
         $reminder = $this
             ->asArray()
             ->where(['id' => $id])
-            ->findAll();
+            ->first();
 
         if (!$reminder) throw new Exception('Could not find reminder for specified ID');
 
