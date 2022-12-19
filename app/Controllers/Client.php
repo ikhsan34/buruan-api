@@ -244,7 +244,7 @@ class Client extends BaseController
             $model = new ReminderModel();
             $model->findReminderById($id);
 
-            $input = $this->getRequestInput($this->request);
+            $input = $this->request->getRawInput();
 
             $model->update($id, $input);
             $reminder = $model->findReminderById($id);
