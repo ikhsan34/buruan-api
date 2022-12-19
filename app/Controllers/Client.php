@@ -242,12 +242,12 @@ class Client extends BaseController
     {
         try {
             $model = new ReminderModel();
-            $model->findClientById($id);
+            $model->findReminderById($id);
 
             $input = $this->getRequestInput($this->request);
 
             $model->update($id, $input);
-            $reminder = $model->findClientById($id);
+            $reminder = $model->findReminderById($id);
 
             return $this->getResponse(
                 [
