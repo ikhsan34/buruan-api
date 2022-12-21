@@ -7,7 +7,7 @@ use Exception;
 
 class HistoryModel extends Model
 {
-    protected $table = 'reminder';
+    protected $table = 'history';
     protected $allowedFields = [
         'group_id',
         'user_id',
