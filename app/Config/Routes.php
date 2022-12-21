@@ -41,14 +41,9 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 // $routes->resource();
 $routes->add('register', 'API/User::register');
 $routes->add('login', 'API/User::login');
+$routes->put('user/update', 'API/User::updateProfile', ['filter' => 'auth']);
 //$routes->post('reGenToken', 'API/Token::reGenToken');
 
-// $routes->resource('API/Client'); // Equivalent to the following:
-// $routes->get('client', 'Client::index', ['filter' => 'auth']);
-// $routes->post('client', 'Client::store', ['filter' => 'auth']);
-// $routes->get('client/(:num)', 'Client::show/$1', ['filter' => 'auth']);
-// $routes->put('client/(:num)', 'Client::update/$1', ['filter' => 'auth']);
-// $routes->delete('client/(:num)', 'Client::destroy/$1', ['filter' => 'auth']);
 
 // Reminder
 $routes->post('reminder', 'Client::insertReminder', ['filter' => 'auth']);
