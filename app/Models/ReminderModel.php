@@ -21,7 +21,6 @@ class ReminderModel extends Model
     public function findAllReminder() {
         $group = $this
             ->asArray()
-            ->where(['reminded' => 0])
             ->findAll();
 
         if (!$group) throw new Exception('Could not find Group for specified ID');
