@@ -392,34 +392,25 @@ class Client extends BaseController
 
 
     public function setHistory() {
-        try {
             
-            $reminderModel = new ReminderModel();
-            $reminder = $reminderModel->getReminderBeforeNow();
+        $reminderModel = new ReminderModel();
+        $reminder = $reminderModel->getReminderBeforeNow();
 
-            $historyModel = new HistoryModel();
-            
-            foreach ($reminder as $item) {
-                $historyModel->insert($item);
-            }
-
-            $date = date('Y-m-d');
-            $reminderModel->where('deadline <', $date)->delete();
-
-            $history = $historyModel->getHistory();
-
-            return $this->getResponse([
-                'message' => 'Success',
-                'history' => $history
-            ]);
-
-        } catch (Exception $e) {
-            return $this->getResponse(
-                [
-                    'message' => 'Could not find history'
-                ],
-                ResponseInterface::HTTP_NOT_FOUND
-            );
+        $historyModel = new HistoryModel();
+        
+        foreach ($reminder as $item) {
+            $historyModel->insert($item);
         }
+
+        $date = date('Y-m-d');
+        $reminderModel->where('deadline <', $date)->delete();
+
+        $history = $historyModel->getHistory();
+
+        return $this->getResponse([
+            'message' => 'Success',
+            'history' => $history
+        ]);
+
     }
 }
