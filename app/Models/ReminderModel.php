@@ -18,9 +18,11 @@ class ReminderModel extends Model
     ];
     protected $updatedField = 'updated_at';
 
-    public function findAllReminder() {
+    public function getReminderBeforeNow() {
+        $date = date('Y-m-d');
         $group = $this
             ->asArray()
+            ->where('deadline < ', $date)
             ->findAll();
 
         if (!$group) throw new Exception('Could not find Group for specified ID');

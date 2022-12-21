@@ -393,14 +393,14 @@ class Client extends BaseController
 
     public function setHistory() {
         try {
-            $date = date('Y-m-d');
-            $reminder = new ReminderModel();
+            
+            $reminderModel = new ReminderModel();
+            $reminder = $reminderModel->getReminderBeforeNow();
 
-            $query = $this->db->get_where('deadline <', $date);
-            foreach ($query->result() as $row) {
-                $this->db->insert('table2',$row);
-                $reminder->deleteReminderById($row->id);
-            }
+            return $this->getResponse([
+                'message' => 'Success',
+                'reminder' => $reminder
+            ]);
 
         } catch (Exception $e) {
             return $this->getResponse(
