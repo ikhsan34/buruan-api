@@ -41,6 +41,19 @@ class UserModel extends Model
     {
         return password_hash($plaintextPassword, PASSWORD_BCRYPT);
     }
+
+    public function findUserById(string $id)
+    {
+        $user = $this
+            ->asArray()
+            ->where(['id' => $id])
+            ->first();
+
+        if (!$user) 
+            throw new Exception('User does not exist for specified email address');
+
+        return $user;
+    }
                                       
     public function findUserByEmailAddress(string $emailAddress)
     {
