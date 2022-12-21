@@ -401,8 +401,10 @@ class Client extends BaseController
             
             foreach ($reminder as $item) {
                 $historyModel->insert($item);
-                $reminderModel->where('id', $item->id)->delete();
             }
+
+            $date = date('Y-m-d');
+            $reminderModel->where('deadline <', $date)->delete();
 
             $history = $historyModel->getHistory();
 
