@@ -401,6 +401,7 @@ class Client extends BaseController
             
             foreach ($reminder as $item) {
                 $historyModel->insert($item);
+                $reminderModel->delete($item->id);
             }
 
             $history = $historyModel->getHistory();
