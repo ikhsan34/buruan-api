@@ -24,7 +24,6 @@ class Client extends BaseController
             $rules = [
                 'name' => 'required',
                 'phone' => 'required',
-                'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[user.email]'
             ];
     
             $input = $this->request->getRawInput();
