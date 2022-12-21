@@ -25,7 +25,7 @@ class ReminderModel extends Model
             ->where('deadline < ', $date)
             ->findAll();
 
-        if (!$group) throw new Exception('Could not find Group for specified ID');
+        if (!$group) $group = [];
 
         return $group;
     }
