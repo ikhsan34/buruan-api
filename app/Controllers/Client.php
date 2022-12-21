@@ -6,6 +6,7 @@ use App\Models\UserModel;
 use App\Models\GroupMembershipModel;
 use App\Models\ReminderModel;
 use App\Models\GroupModel;
+use App\Models\HistoryModel;
 // use App\Controllers\BaseController;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -175,6 +176,28 @@ class Client extends BaseController
             return $this->getResponse(
                 [
                     'message' => $exception->getMessage()
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+    public function deleteReminder($id){
+        try {
+            $model = new ReminderModel();
+            $reminder = $model->deleteReminderById($id);
+
+
+            return $this->getResponse(
+                [
+                    'message' => 'group retrieved successfully',
+                    'group' => $reminder
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find group'
                 ],
                 ResponseInterface::HTTP_NOT_FOUND
             );
@@ -361,6 +384,28 @@ class Client extends BaseController
             return $this->getResponse(
                 [
                     'message' => 'Could not find group'
+                ],
+                ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+    }
+
+
+    public function setHistory() {
+        try {
+            $date = date('Y-m-d');
+            $reminder = new ReminderModel();
+
+            $query = $this->db->get_where('deadline <', $date);
+            foreach ($query->result() as $row) {
+                $this->db->insert('table2',$row);
+                $reminder->deleteReminderById($row->id);
+            }
+
+        } catch (Exception $e) {
+            return $this->getResponse(
+                [
+                    'message' => 'Could not find history'
                 ],
                 ResponseInterface::HTTP_NOT_FOUND
             );
