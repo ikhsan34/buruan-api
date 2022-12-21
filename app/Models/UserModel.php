@@ -12,7 +12,7 @@ class UserModel extends Model
         'name',
         'phone',
         'email',
-        'password',
+        //'password',
     ];
     protected $updatedField = 'updated_at';
 
