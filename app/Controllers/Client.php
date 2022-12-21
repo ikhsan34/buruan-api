@@ -27,7 +27,7 @@ class Client extends BaseController
                 'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[user.email]'
             ];
     
-            $input = $this->getRequestInput($this->request);
+            $input = $this->request->getRawInput();
             if (!$this->validateRequest($input, $rules)) {
                 return $this->getResponse(
                     $this->validator->getErrors(),
