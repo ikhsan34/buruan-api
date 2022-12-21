@@ -41,7 +41,7 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 // $routes->resource();
 $routes->add('register', 'API/User::register');
 $routes->add('login', 'API/User::login');
-$routes->put('user/update', 'API/User::updateProfile', ['filter' => 'auth']);
+$routes->put('profile', 'API/User::updateProfile', ['filter' => 'auth']);
 //$routes->post('reGenToken', 'API/Token::reGenToken');
 
 
