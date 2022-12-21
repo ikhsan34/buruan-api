@@ -190,14 +190,14 @@ class Client extends BaseController
 
             return $this->getResponse(
                 [
-                    'message' => 'group retrieved successfully',
-                    'group' => $reminder
+                    'message' => 'Delete reminder successfully',
+                    'reminder' => $reminder
                 ]
             );
         } catch (Exception $e) {
             return $this->getResponse(
                 [
-                    'message' => 'Could not find group'
+                    'message' => 'Could not find reminder'
                 ],
                 ResponseInterface::HTTP_NOT_FOUND
             );
