@@ -21,8 +21,6 @@ class User extends BaseController
      * @throws ReflectionException
      */
 
-
-
     public function register()
     {
         $rules = [
@@ -49,6 +47,10 @@ class User extends BaseController
         );
     }
 
+    /**
+     * Update Existing User
+     * @return Response
+     */
     public function updateProfile($id)
     {
         try {
