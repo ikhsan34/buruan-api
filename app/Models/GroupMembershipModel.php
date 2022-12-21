@@ -26,12 +26,26 @@ class GroupMembershipModel extends Model
         return $Group;
     }
 
+    // public function findGroupByGroupId($id)
+    // {
+    //     $Group = $this
+    //         ->asArray()
+    //         ->where(['group_id' => $id])
+    //         ->findAll();
+
+    //     if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
+
+    //     return $Group;
+    // }
+
     public function findGroupByGroupId($id)
     {
         $Group = $this
-            ->asArray()
-            ->where(['group_id' => $id])
-            ->findAll();
+            ->db
+            ->table('group_membership')
+            ->where('group_id', $id)
+            ->join('user', 'group_membership.user_id = user.id')
+            ->get();
 
         if (!$Group) throw new Exception('Could not find Group Membership for specified ID');
 
