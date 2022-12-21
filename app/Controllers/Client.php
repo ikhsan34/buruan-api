@@ -348,7 +348,7 @@ class Client extends BaseController
     {
         try {
             $model = new GroupMembershipModel();
-            $group = $model->findGroupByGroupId($id);
+            $group = $model->findGroupByGroupId($id)->getResult();
 
 
             return $this->getResponse(
