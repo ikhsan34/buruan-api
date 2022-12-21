@@ -19,6 +19,15 @@ class Client extends BaseController
      * @return Response
      */
 
+    
+    public function index() {
+        return $this->getResponse(
+            [
+                'message' => 'Reminder added successfully',
+            ]
+        );
+    }
+
     public function insertReminder()
     {
         $rules = [
