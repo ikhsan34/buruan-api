@@ -391,7 +391,7 @@ class Client extends BaseController
     }
 
 
-    public function setHistory() {
+    public function setHistory($id) {
             
         $reminderModel = new ReminderModel();
         $reminder = $reminderModel->getReminderBeforeNow();
@@ -405,7 +405,7 @@ class Client extends BaseController
         $date = date('Y-m-d');
         $reminderModel->where('deadline <', $date)->delete();
 
-        $history = $historyModel->getHistory();
+        $history = $historyModel->getHistoryByUserId($id);
 
         return $this->getResponse([
             'message' => 'Success',

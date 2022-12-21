@@ -52,7 +52,7 @@ $routes->get('reminder/user/(:num)', 'Client::showReminderByUserId/$1', ['filter
 $routes->get('reminder/group/(:num)', 'Client::showReminderByGroupId/$1', ['filter' => 'auth']);
 $routes->put('reminder/(:num)', 'Client::updateReminder/$1', ['filter' => 'auth']);
 $routes->delete('reminder/(:num)', 'Client::deleteReminder/$1', ['filter' => 'auth']);
-$routes->get('history', 'Client::setHistory', ['filter' => 'auth']);
+$routes->get('history/(:num)', 'Client::setHistory/$1', ['filter' => 'auth']);
 
 // Group
 $routes->post('group', 'Client::createGroup', ['filter' => 'auth']);

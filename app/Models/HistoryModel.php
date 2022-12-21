@@ -22,7 +22,18 @@ class HistoryModel extends Model
             ->asArray()
             ->findAll();
 
-        if (!$reminder) throw new Exception('Could not find reminder for specified Group ID');
+        if (!$reminder) throw new Exception('Could not find history for specified Group ID');
+
+        return $reminder;
+    }
+
+    public function getHistoryByUserId($id) {
+        $reminder = $this
+            ->asArray()
+            ->where(['user_id' => $id])
+            ->findAll();
+
+        if (!$reminder) throw new Exception('Could not find history for specified Group ID');
 
         return $reminder;
     }
