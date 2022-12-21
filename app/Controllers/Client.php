@@ -397,9 +397,17 @@ class Client extends BaseController
             $reminderModel = new ReminderModel();
             $reminder = $reminderModel->getReminderBeforeNow();
 
+            $historyModel = new HistoryModel();
+            
+            foreach ($reminder as $item) {
+                $historyModel->insert($item);
+            }
+
+            $history = $historyModel->getHistory();
+
             return $this->getResponse([
                 'message' => 'Success',
-                'reminder' => $reminder
+                'history' => $history
             ]);
 
         } catch (Exception $e) {
